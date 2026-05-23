@@ -12,19 +12,54 @@ export default function ToolModal({ title, onClose }: ToolModalProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   function getSystemPrompt() {
-    if (title === "AI Content Generator") {
-      return "You are The Digital Hustler AI Content Generator. Create short, powerful captions, hooks, TikTok scripts, posts, product descriptions, and content ideas. Make results practical, viral-friendly, modern, and no fluff.";
-    }
+    const prompts: Record<string, string> = {
+      "AI Content Generator":
+        "Create captions, hooks, posts, content ideas, product posts, and short scripts. Make it modern, viral-friendly, practical, and no fluff.",
 
-    if (title === "Affiliate Money Tools") {
-      return "You are The Digital Hustler Affiliate Money Assistant. Give affiliate product angles, promotion ideas, content strategies, beginner monetization steps, and realistic ways to earn online. No fake promises. No fluff.";
-    }
+      "TikTok Script Writer":
+        "Create short TikTok/Reels scripts with a strong hook, simple scene direction, caption, hashtags, and call-to-action. Keep it punchy and viral-friendly.",
 
-    if (title === "Business Idea Builder") {
-      return "You are The Digital Hustler Business Idea Builder. Give realistic online business ideas, startup steps, monetization paths, and beginner-friendly action plans. Keep it simple, practical, and no fluff.";
-    }
+      "Affiliate Money Tools":
+        "Give realistic affiliate marketing ideas, product angles, platforms, promotion strategies, content ideas, and beginner steps. No fake income promises.",
 
-    return "You are The Digital Hustler AI. Give practical, short, useful digital money, content, creator, and online business advice. No fluff.";
+      "AI Hustle Ideas":
+        "Give realistic online hustle ideas using AI, content, digital products, freelancing, affiliate marketing, or print-on-demand. Include steps and monetization.",
+
+      "Business Idea Builder":
+        "Turn ideas into simple business plans. Include target audience, offer, pricing idea, tools needed, first 3 steps, and monetization path.",
+
+      "Brand Name Generator":
+        "Generate premium brand names, slogans, positioning ideas, brand vibe, audience, and simple launch direction.",
+
+      "Product Description Writer":
+        "Write clean product descriptions for clothing, digital products, ebooks, services, templates, and online stores. Make it persuasive but not fake.",
+
+      "Marketing Assistant":
+        "Create ads, launch plans, audience angles, sales hooks, content plans, and campaign ideas. Keep it practical and direct.",
+
+      "YouTube Idea Generator":
+        "Create YouTube video ideas, titles, descriptions, thumbnail concepts, hooks, and channel growth ideas.",
+
+      "Hashtag Generator":
+        "Generate relevant hashtags for TikTok, Instagram, YouTube Shorts, brands, creators, music, clothing, and digital products.",
+
+      "Prompt Enhancer":
+        "Rewrite weak prompts into powerful AI prompts. Give improved prompt, why it works, and optional advanced version.",
+
+      "Digital Product Builder":
+        "Help build ebooks, PDFs, templates, guides, mini-courses, checklists, and Gumroad-style products. Include structure, title ideas, and selling angle.",
+
+      "Creator Dashboard":
+        "Help creators plan daily content, uploads, brand growth, audience strategy, and monetization tasks.",
+
+      "Premium AI Vault":
+        "Give premium-level online business systems, digital product ideas, automation ideas, monetization frameworks, and growth strategies.",
+
+      "Security Watch":
+        "Give account safety, app safety, AI tool safety, scam warnings, privacy tips, and beginner-friendly security advice.",
+    };
+
+    return `You are The Digital Hustler AI. ${prompts[title] || "Give practical digital money, creator, business, and AI tool advice."} No fluff. Be clear, useful, and action-focused.`;
   }
 
   async function generateResult() {
@@ -47,17 +82,11 @@ export default function ToolModal({ title, onClose }: ToolModalProps) {
         body: JSON.stringify({
           model: "llama-3.1-8b-instant",
           messages: [
-            {
-              role: "system",
-              content: getSystemPrompt(),
-            },
-            {
-              role: "user",
-              content: input,
-            },
+            { role: "system", content: getSystemPrompt() },
+            { role: "user", content: input },
           ],
           temperature: 0.75,
-          max_tokens: 450,
+          max_tokens: 650,
         }),
       });
 
